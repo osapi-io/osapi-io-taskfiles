@@ -38,6 +38,11 @@ tasks:
     cmds:
       - go test -parallel 5 -race -v ./...
 
+  unit:int:
+    desc: Integration test packages
+    cmds:
+      -
+
   test:
     desc: Test all
     cmds:
