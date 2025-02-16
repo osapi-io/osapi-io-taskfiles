@@ -22,5 +22,4 @@ tasks:
     desc: Integration bats test packages
     cmds:
       - task: fmt:check
-      - rm -f database.db
       - ./vendor/bats/bin/bats .
