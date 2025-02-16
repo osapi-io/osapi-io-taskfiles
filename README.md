@@ -8,7 +8,8 @@
 version: '3'
 
 includes:
-  go: https://raw.githubusercontent.com/osapi-io/osapi-io-taskfiles/refs/heads/main/go.yml
+  go: https://raw.githubusercontent.com/osapi-io/osapi-io-taskfile/refs/heads/main/go.yml
+  bats: https://raw.githubusercontent.com/osapi-io/osapi-io-taskfile/refs/heads/main/bats.yml
 ```
 
 ## License
