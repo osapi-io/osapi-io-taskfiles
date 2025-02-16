@@ -16,6 +16,7 @@ tasks:
       - go install github.com/boumenot/gocover-cobertura@latest
       - go install mvdan.cc/gofumpt@latest
       - go install github.com/jstemmer/go-junit-report@latest
+      - go install github.com/nats-io/natscli/nats@latest
 
   mod:
     desc: Module maintenance
