@@ -41,7 +41,7 @@ tasks:
   unit:int:
     desc: Integration test packages
     cmds:
-      -
+      - task: bats:test
 
   test:
     desc: Test all
