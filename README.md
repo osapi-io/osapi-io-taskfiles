@@ -1,6 +1,6 @@
-# Remote Taskfile
+# Remote Taskfiles
 
-A [Remote Taskfile][] used by [osapi-io][] projects.
+[Remote Taskfile][]s used by [osapi-io][] projects.
 
 ## Usage
 
@@ -8,15 +8,7 @@ A [Remote Taskfile][] used by [osapi-io][] projects.
 version: '3'
 
 includes:
-  go: https://raw.githubusercontent.com/osapi-io/osapi-io-taskfile/refs/heads/main/Taskfile.yml
-```
-
-### Start
-
-To start the embedded NATS server:
-
-```bash
-$ nats-server start
+  go: https://raw.githubusercontent.com/osapi-io/osapi-io-taskfiles/refs/heads/main/go.yml
 ```
 
 ## License
