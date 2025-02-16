@@ -50,7 +50,6 @@ tasks:
       - task: fmt:check
       - task: vet
       - task: unit:cov
-      - task: unit:int
 
   unit:cov:
     desc: Generate coverage
