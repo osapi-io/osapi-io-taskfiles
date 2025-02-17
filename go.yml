@@ -17,13 +17,7 @@ tasks:
   deps:
     desc: Install dependencies
     cmds:
-      - go install github.com/spf13/cobra-cli@latest
-      - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-      - go install github.com/segmentio/golines@latest
-      - go install github.com/boumenot/gocover-cobertura@latest
-      - go install mvdan.cc/gofumpt@latest
-      - go install github.com/jstemmer/go-junit-report@latest
-      - go install github.com/nats-io/natscli/nats@latest
+      - go install tool
 
   mod:
     desc: Module maintenance
@@ -34,7 +28,7 @@ tasks:
   vet:
     desc: Report likely mistakes in packages
     cmds:
-      - $(go env GOPATH)/bin/golangci-lint run --config {{ .GIT_ROOT }}/.golangci.yml
+      - go tool github.com/golangci/golangci-lint/cmd/golangci-lint run --config {{ .GIT_ROOT }}/.golangci.yml
 
   run:
     desc: Compile and run Go program
@@ -66,7 +60,7 @@ tasks:
       GOEXPERIMENT: nocoverageredesign
     cmds:
       - go test {{ .OS_TAGS }} -race -coverprofile=cover.out -v $(go list ./...)
-      - gocover-cobertura --ignore-files mock.go < cover.out > cobertura.xml
+      - go tool github.com/boumenot/gocover-cobertura --ignore-files mock.go < cover.out > cobertura.xml
       - go tool cover -func=cover.out
 
   unit:cov:map:
@@ -78,15 +72,15 @@ tasks:
   fmt:
     desc: Reformat files whose formatting differs from `go_fmt_command`
     cmds:
-      - find . -type f -name '*.go' ! -name '*.gen.go' ! -name '*.pb.go' | xargs gofumpt -l -w
-      - find . -type f -name '*.go' ! -name '*.gen.go' ! -name '*.pb.go' | xargs golines --base-formatter=gofumpt -w
+      - find . -type f -name '*.go' ! -name '*.gen.go' ! -name '*.pb.go' | xargs go tool mvdan.cc/gofumpt -l -w
+      - find . -type f -name '*.go' ! -name '*.gen.go' ! -name '*.pb.go' | xargs go tool github.com/segmentio/golines --base-formatter=gofumpt -w
 
   fmt:check:
     desc: Check files whose formatting differs from `go_fmt_command`
     cmds:
       # https://github.com/mvdan/gofumpt/issues/114
-      - test -z "$(find . -type f -name '*.go' ! -name '*.gen.go' ! -name '*.pb.go' | xargs gofumpt -d -e | tee /dev/stderr)"
-      - test -z "$(find . -type f -name '*.go' ! -name '*.gen.go' ! -name '*.pb.go' | xargs golines --dry-run --base-formatter=gofumpt -l | tee /dev/stderr)"
+      - test -z "$(find . -type f -name '*.go' ! -name '*.gen.go' ! -name '*.pb.go' | xargs go tool mvdan.cc/gofumpt -d -e | tee /dev/stderr)"
+      - test -z "$(find . -type f -name '*.go' ! -name '*.gen.go' ! -name '*.pb.go' | xargs go tool github.com/segmentio/golines --dry-run --base-formatter=gofumpt -l | tee /dev/stderr)"
 
   generate:
     desc: Generate Go files by processing source
