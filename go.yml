@@ -60,7 +60,8 @@ tasks:
       GOEXPERIMENT: nocoverageredesign
     cmds:
       - go test {{ .OS_TAGS }} -race -coverprofile=cover.out -v $(go list ./...)
-      - go tool github.com/boumenot/gocover-cobertura --ignore-files mock.go < cover.out > cobertura.xml
+      - grep -v -f .coverignore cover.out > cover.tmp && mv cover.tmp cover.out
+      - go tool github.com/boumenot/gocover-cobertura < cover.out > cobertura.xml
       - go tool cover -func=cover.out
 
   unit:cov:map:
