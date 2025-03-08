@@ -24,6 +24,13 @@ tasks:
     cmds:
       - go mod download
       - go mod tidy
+      - for dir in examples/*/; do (cd "$dir" && go mod tidy); done
+      - |
+          if [ -d examples/ ] && [ "$(ls examples/)" ]; then
+            for dir in examples/*/; do
+              (cd "${dir}" && go mod tidy)
+            done
+          fi
 
   vet:
     desc: Report likely mistakes in packages
