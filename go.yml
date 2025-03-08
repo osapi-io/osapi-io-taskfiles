@@ -57,6 +57,7 @@ tasks:
     cmds:
       - task: mod
       - task: fmt:check
+      - task: docs:check
       - task: vet
       - task: unit:cov
 
@@ -94,3 +95,27 @@ tasks:
     desc: Generate Go files by processing source
     cmds:
       - go generate ./...
+
+  docs:generate:
+    desc: Generate markdown documentation for golang code
+    cmds:
+      - gomarkdoc --output README.md ./...
+
+  docs:generate:
+    desc: Generate documentation for each package in pkg/
+    cmds:
+      - mkdir -p docs
+      - |
+        for pkg in $(find pkg -type d -not -path "pkg" -not -path "pkg/*/*" -mindepth 1 -maxdepth 1); do
+          pkg_name=$(basename "${pkg}")
+          gomarkdoc --output "docs/${pkg_name}.md" "./${pkg}"
+        done
+
+  docs:check:
+    desc: Check if docs are outdated by verifying git status
+    cmds:
+      - |
+        if [[ -n "$(git status --porcelain docs/)" ]]; then
+          echo "Documentation is outdated! Run 'task docs:generate' to regenerate and commit changes."
+          exit 1
+        fi
