@@ -104,11 +104,11 @@ tasks:
   docs:generate:
     desc: Generate documentation for each package in pkg/
     cmds:
-      - mkdir -p docs
+      - mkdir -p docs/gen/
       - |
         for pkg in $(find pkg -type d -not -path "pkg" -not -path "pkg/*/*" -mindepth 1 -maxdepth 1); do
           pkg_name=$(basename "${pkg}")
-          gomarkdoc --output "docs/${pkg_name}.md" "./${pkg}"
+          gomarkdoc --output "docs/gen/${pkg_name}.md" "./${pkg}"
         done
 
   docs:check:
